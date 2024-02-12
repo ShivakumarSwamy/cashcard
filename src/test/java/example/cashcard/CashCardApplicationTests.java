@@ -46,7 +46,7 @@ class CashCardApplicationTests {
 	@Test
 	@DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
 	void shouldBe200WhenCashCardSaved() {
-		CashCard newCashCard = new CashCard(null, 250.00);
+		CashCard newCashCard = new CashCard(null, 250.00, "sarah1");
 		ResponseEntity<Void> responseEntity = testRestTemplate.postForEntity("/cashcards", newCashCard, Void.class);
 		assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 

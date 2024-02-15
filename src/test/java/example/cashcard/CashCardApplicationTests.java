@@ -46,7 +46,7 @@ class CashCardApplicationTests {
 	@Test
 	@DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
 	void shouldBe200WhenCashCardSaved() {
-		CashCard newCashCard = new CashCard(null, 250.00, "sarah1");
+		CashCard newCashCard = new CashCard(null, 250.00, null);
 		ResponseEntity<Void> responseEntity = testRestTemplate.withBasicAuth("sarah1", "abc123").postForEntity("/cashcards", newCashCard, Void.class);
 		assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 
@@ -129,5 +129,11 @@ class CashCardApplicationTests {
 	void shouldBe403WhenUserTryToAccessNotOwningCard() {
 		ResponseEntity<String> response = testRestTemplate.withBasicAuth("hank-owns-no-cards", "qrs456").getForEntity("/cashcards/99", String.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+	}
+
+	@Test
+	void shouldBe404WhenTryingToAccessCardTheyDoNotOwn() {
+		ResponseEntity<String> response = testRestTemplate.withBasicAuth("sarah1", "abc123").getForEntity("/cashcards/102", String.class);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 	}
 }

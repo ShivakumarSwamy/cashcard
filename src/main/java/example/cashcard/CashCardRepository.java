@@ -11,4 +11,6 @@ public interface CashCardRepository extends PagingAndSortingRepository<CashCard,
     CashCard findByIdAndOwner(Long id, String owner);
 
     Page<CashCard> findByOwner(String owner, Pageable pageable);
+
+    boolean existsByIdAndOwner(Long id, String owner);
 }

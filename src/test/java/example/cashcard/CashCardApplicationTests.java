@@ -140,6 +140,7 @@ class CashCardApplicationTests {
 	}
 
 	@Test
+	@DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
 	void shouldBe204WhenUpdateAnExistingCashCard() {
 		CashCard cashCardUpdate = new CashCard(null, 19.99, null);
 		HttpEntity<CashCard> request = new HttpEntity<>(cashCardUpdate);
